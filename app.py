@@ -19,10 +19,21 @@ class HealthResponse(BaseModel):
     version: str
 
 
+class ReadinessResponse(BaseModel):
+    status: str
+    checks: dict
+
+
 @app.get("/health", response_model=HealthResponse)
 def health_check():
     """Liveness endpoint."""
     return {"status": "ok", "version": "1.0.0"}
+
+
+@app.get("/ready", response_model=ReadinessResponse)
+def readiness_check():
+    """Readiness endpoint - confirms the app can serve traffic."""
+    return {"status": "ready", "checks": {"app": "ok"}}
 
 
 @app.get("/")
