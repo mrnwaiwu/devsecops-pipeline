@@ -36,6 +36,16 @@ Patterns scanned:
 - Database connection strings
 - OAuth tokens
 
+## Supply Chain Security
+
+| Tool | Stage | Fail Threshold |
+|---|---|---|
+| Sigstore/Cosign | post-build | Unsigned container images |
+| SLSA Provenance | post-build | Missing build provenance attestation |
+| in-toto | post-build | Failed link verification |
+
+All build artifacts are signed with Sigstore and provenance attestations are generated per SLSA Level 2 requirements. Unsigned or unverifiable images are blocked from promotion to staging. The signing key is stored in Google Cloud KMS and access is audited via Cloud Audit Logs.
+
 ## Runtime Security (DAST)
 
 OWASP ZAP runs against the staging environment after deployment.
